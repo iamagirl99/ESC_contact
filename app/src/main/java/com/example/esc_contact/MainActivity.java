@@ -47,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 ArrayList<Contact> mDataset = new ArrayList<>();
-                datalist = mDataset;
+                datalist = new ArrayList<>();
+                datalist.clear();
                 datalist = getContactList();
                 adapter.notifyDataSetChanged();
                 final Handler handler = new Handler();
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPermissionGranted() {
                 //Toast.makeText(MainActivity.this, "권한 허가", Toast.LENGTH_SHORT).show();
+                datalist = new ArrayList<>();
+                datalist.clear();
                 datalist = getContactList();
                 adapter = new Adapter(MainActivity.this, datalist);
                 recyclerView = findViewById(R.id.main_recy);
@@ -125,7 +128,8 @@ public class MainActivity extends AppCompatActivity {
                 ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
 
             ArrayList<Contact> mDataset = new ArrayList<>();
-            datalist = mDataset;
+            datalist = new ArrayList<>();
+            datalist.clear();
             datalist = getContactList();
 
         }
@@ -135,7 +139,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         ArrayList<Contact> mDataset = new ArrayList<>();
-        datalist = mDataset;
+        datalist = new ArrayList<>();
+        datalist.clear();
         datalist = getContactList();
 
     }
@@ -151,8 +156,7 @@ public class MainActivity extends AppCompatActivity {
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         String[] projection = new String[]{
                 ContactsContract.CommonDataKinds.Phone.NUMBER,
-                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                ContactsContract.Contacts._ID};
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
 
         String sortOrder = ContactsContract.Contacts.DISPLAY_NAME + " COLLATE LOCALIZED ASC";
 
@@ -162,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             do {
                 Contact myContact = new Contact();
-                myContact.id = cursor.getLong(2);
                 myContact.phoneNumber = cursor.getString(0);
                 myContact.name = cursor.getString(1);
 

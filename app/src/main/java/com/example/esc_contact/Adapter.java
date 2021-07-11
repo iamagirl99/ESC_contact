@@ -46,6 +46,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recy_item, parent, false);
         Holder holder = new Holder(view);
+
         return holder;
     }
 
@@ -54,6 +55,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         Contact contact = datalist.get(position);
         holder.name.setText(contact.getName());
         holder.phonenum.setText(contact.getPhoneNumber());
+
 
         holder.call.setOnClickListener(new View.OnClickListener() {
             @Override
