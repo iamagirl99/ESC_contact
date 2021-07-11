@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,6 +55,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         Contact contact = datalist.get(position);
         holder.name.setText(contact.getName());
+
         holder.phonenum.setText(contact.getPhoneNumber());
 
 
