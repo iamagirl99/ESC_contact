@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Adapter adapter;
     private EditText search;
-    private Button add;
+    private ImageButton add;
 
 
     @Override
@@ -46,11 +47,11 @@ public class MainActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ArrayList<Contact> mDataset = new ArrayList<>();
                 datalist = new ArrayList<>();
                 datalist.clear();
                 datalist = getContactList();
                 adapter.notifyDataSetChanged();
+                recyclerView.setAdapter(adapter);
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -73,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
         PermissionListener permissionListener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                //Toast.makeText(MainActivity.this, "권한 허가", Toast.LENGTH_SHORT).show();
-                datalist = new ArrayList<>();
                 datalist.clear();
                 datalist = getContactList();
                 adapter = new Adapter(MainActivity.this, datalist);
@@ -120,29 +119,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-
-            ArrayList<Contact> mDataset = new ArrayList<>();
-            datalist = new ArrayList<>();
-            datalist.clear();
-            datalist = getContactList();
-
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED &&
+//                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED &&
+//                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+//
+//            ArrayList<Contact> mDataset = new ArrayList<>();
+//            datalist = new ArrayList<>();
+//            datalist.clear();
+//            datalist = getContactList();
+//            adapter = new Adapter(MainActivity.this, datalist);
+//            recyclerView.setAdapter(adapter);
+//        }
+//    }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        ArrayList<Contact> mDataset = new ArrayList<>();
         datalist = new ArrayList<>();
         datalist.clear();
         datalist = getContactList();
-
+        //adapter.notifyDataSetChanged();
+        adapter = new Adapter(MainActivity.this, datalist);
+        recyclerView.setAdapter(adapter);
     }
 
 

@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -17,15 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.PrimitiveIterator;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -57,7 +53,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         holder.name.setText(contact.getName());
 
         holder.phonenum.setText(contact.getPhoneNumber());
-
 
         holder.call.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,11 +100,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
                         datalist.remove(position);
                         notifyItemRemoved(position);
                         notifyItemRangeChanged(position, datalist.size());
-
                     }
                 });
                 builder.setNegativeButton("아니오", null);
-
 
                 builder.create().show();
 
@@ -121,11 +114,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     @Override
     public int getItemCount() {
         return datalist.size();
-    }
-
-    public void  filterList(ArrayList<Contact> filteredList) {
-        datalist = filteredList;
-        notifyDataSetChanged();
     }
 
     public static class Holder extends RecyclerView.ViewHolder{
@@ -144,6 +132,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
 
         }
 
+    }
+
+    public void  filterList(ArrayList<Contact> filteredList) {
+        datalist = filteredList;
+        notifyDataSetChanged();
     }
 
     private static long getContactIDFromNumber(ContentResolver contactHelper, String number) {
